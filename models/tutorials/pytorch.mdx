@@ -5,7 +5,7 @@ import { ColabLink } from '/snippets/en/_includes/colab-link.mdx';
 
 <ColabLink url="https://colab.research.google.com/github/wandb/examples/blob/master/colabs/pytorch/Simple_PyTorch_Integration.ipynb" />
 
-Use [W&B](https://wandb.ai) for machine learning experiment tracking, dataset versioning, and project collaboration.
+Use Weights & Biases (W&B)(https://wandb.ai) for machine learning experiment tracking, dataset versioning, and project collaboration.
 
 <Frame>
     <img src="/images/tutorials/huggingface-why.png" alt="Benefits of using W&B"  />
@@ -13,7 +13,7 @@ Use [W&B](https://wandb.ai) for machine learning experiment tracking, dataset ve
 
 ## What this notebook covers
 
-We show you how to integrate W&B with your PyTorch code to add experiment tracking to your pipeline.
+This notebook shows you how to integrate W&B with your PyTorch code to add experiment tracking to your pipeline.
 
 <Frame>
     <img src="/images/tutorials/pytorch.png" alt="PyTorch and W&B integration diagram"  />
@@ -23,35 +23,35 @@ We show you how to integrate W&B with your PyTorch code to add experiment tracki
 # import the library
 import wandb
 
-# capture a dictionary of hyperparameters with config
+# Capture a dictionary of hyperparameters with config
 config = {
     "learning_rate": 0.001,
     "epochs": 100,
     "batch_size": 128
 }
 
-# start a new experiment
+# Start a new experiment
 with wandb.init(project="new-sota-model", config=config) as run:
 
-    # set up model and data
+    # Set up model and data
     model, dataloader = get_model(), get_data()
 
-    # optional: track gradients
+    # Optional: track gradients
     run.watch(model)
 
     for batch in dataloader:
     metrics = model.training_step()
-    # log metrics inside your training loop to visualize model performance
+    # Log metrics inside your training loop to visualize model performance
     run.log(metrics)
 
-    # optional: save model at the end
+    # Optional: save model at the end
     model.to_onnx()
     run.save("model.onnx")
 ```
 
-Follow along with a [video tutorial](https://wandb.me/pytorch-video).
+You can follow along with a [video tutorial](https://wandb.me/pytorch-video).
 
-**Note**: Sections starting with _Step_ are all you need to integrate W&B in an existing pipeline. The rest just loads data and defines a model.
+**Note**: Sections starting with **Step** are all you need to integrate W&B in an existing pipeline. The remaining sections load data and define a model.
 
 ## Install, import, and log in
 
@@ -82,9 +82,9 @@ torchvision.datasets.MNIST.mirrors = [mirror for mirror in torchvision.datasets.
                                       if not mirror.startswith("http://yann.lecun.com")]
 ```
 
-### Step 0: Install W&B
+### Step 1: Install W&B
 
-To get started, we'll need to get the library.
+To get started, you need to install the library.
 `wandb` is easily installed using `pip`.
 
 
@@ -92,7 +92,7 @@ To get started, we'll need to get the library.
 !pip install wandb onnx -Uq
 ```
 
-### Step 1: Import W&B and Login
+### Step 2: Import W&B and log in
 
 In order to log data to our web service,
 you'll need to log in.
