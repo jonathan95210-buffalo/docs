@@ -47,7 +47,7 @@ with wandb.init(project="new-sota-model", config=config) as run:
     # Log metrics inside your training loop to visualize model performance
     run.log(metrics)
 
-    # Save model
+    # Save model (optional)
     model.to_onnx()
     run.save("model.onnx")
 ```
@@ -85,7 +85,7 @@ torchvision.datasets.MNIST.mirrors = [mirror for mirror in torchvision.datasets.
                                       if not mirror.startswith("http://yann.lecun.com")]
 ```
 
-### Step 1: Install W&B
+### Step 0: Install W&B
 
 To get started, install the `wandb` library using `pip`.
 
@@ -94,7 +94,7 @@ To get started, install the `wandb` library using `pip`.
 !pip install wandb onnx -Uq
 ```
 
-### Step 2: Import W&B and log in
+### Step 1: Import W&B and log in
 
 To log data to the W&B web service, you need to log in.
 
@@ -231,7 +231,7 @@ def make_loader(dataset, batch_size):
     return loader
 ```
 
-Defining the model is normally is enjoyable and nothing changes with `wandb`.
+Defining the model is normally enjoyable and nothing changes with `wandb`.
 We use a standard ConvNet architecture. This is a good opportunity to try some experiments.
 All your results will be logged on [wandb.ai](https://wandb.ai).
 
@@ -272,9 +272,9 @@ every `log_freq` steps of training.
 
 Call this function before you start the training loop.
 
-The remainder of the training code follows standard practices:
+The remainder of the training code follows standard practices
 and iterates over epochs and batches, runs forward and backwards
-passes and applies the `optimizer`.
+passes, and applies the `optimizer`.
 
 ```python
 def train(model, loader, criterion, optimizer, config):
@@ -315,16 +315,15 @@ def train_batch(images, labels, model, optimizer, criterion):
     return loss
 ```
 
-The only difference is in the logging code. Previosly, you might have
-reported metrics printing to the terminal, now you pass the same information to `run.log()`.
+The only difference is in the logging code. Previously, you might have
+reported metrics by printing to the terminal, now you pass the same information to `run.log()`.
 
 `run.log()` expects a dictionary with string keys.
 These strings identify the objects being logged, which make up the values.
 You can also optionally log which `step` of training you're on.
 
 > **Note**: Use the number of examples the model has seen, since this shows you
-easier comparison across batch sizes, since this makes for easier comparison across batch sizes,
-you can use raw steps or batch count. You can use raw steps or batch count. For longer training runs,
+easier comparison across batch sizes. You can use raw steps or batch count.
 For longer training runs, it might make sense to log by `epoch`.
 
 
